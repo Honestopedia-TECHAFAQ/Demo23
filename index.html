@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Contract Generator By Afaq Ahmad</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            padding: 15px 0;
+        }
+        header h1 {
+            margin: 0;
+        }
+        main {
+            max-width: 900px;
+            margin: 20px auto;
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .form-group {
+            flex: 1 1 calc(50% - 20px);
+        }
+        .form-group.full-width {
+            flex: 1 1 100%;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #output {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+        #output .arabic {
+            text-align: right;
+            direction: rtl;
+            font-family: 'Amiri', serif;
+        }
+        @media screen and (max-width: 768px) {
+            .form-group {
+                flex: 1 1 100%;
+            }
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>By Afaq Ahmad</h1>
+    </header>
+    <main>
+        <form id="contractForm">
+            <div class="form-group">
+                <label for="employerName">Employer Name</label>
+                <input type="text" id="employerName" placeholder="Enter employer's name" required>
+            </div>
+            <div class="form-group">
+                <label for="workerName">Worker Name</label>
+                <input type="text" id="workerName" placeholder="Enter worker's name" required>
+            </div>
+            <div class="form-group">
+                <label for="nationality">Worker Nationality</label>
+                <input type="text" id="nationality" placeholder="Enter nationality" required>
+            </div>
+            <div class="form-group">
+                <label for="contractDuration">Contract Duration (Years)</label>
+                <input type="number" id="contractDuration" placeholder="Enter duration" required>
+            </div>
+            <div class="form-group">
+                <label for="salary">Monthly Salary (KD)</label>
+                <input type="number" id="salary" placeholder="Enter salary" required>
+            </div>
+            <div class="form-group full-width">
+                <label for="specialTerms">Special Terms (Optional)</label>
+                <textarea id="specialTerms" rows="3" placeholder="Add any additional terms here..."></textarea>
+            </div>
+            <button type="button" onclick="generateContract()">Generate Contract</button>
+        </form>
+
+        <div id="output">
+            <h2>Contract Preview</h2>
+            <h3>English Version</h3>
+            <p id="englishContract"></p>
+            <h3 class="arabic">النسخة العربية</h3>
+            <p id="arabicContract" class="arabic"></p>
+        </div>
+    </main>
+
+    <script>
+        function generateContract() {
+            const employerName = document.getElementById('employerName').value;
+            const workerName = document.getElementById('workerName').value;
+            const nationality = document.getElementById('nationality').value;
+            const contractDuration = document.getElementById('contractDuration').value;
+            const salary = document.getElementById('salary').value;
+            const specialTerms = document.getElementById('specialTerms').value;
+
+            if (!employerName || !workerName || !nationality || !contractDuration || !salary) {
+                alert("Please fill in all required fields.");
+                return;
+            }
+
+            const english = `
+                This contract is made between the employer, ${employerName}, and the worker, ${workerName}, a citizen of ${nationality}.
+                The worker agrees to work for ${employerName} for a period of ${contractDuration} years with a monthly salary of ${salary} KD.
+                ${specialTerms ? `Special terms: ${specialTerms}` : ''}
+            `;
+
+            const arabic = `
+                هذا العقد مبرم بين صاحب العمل ${employerName} والعامل ${workerName}، وهو مواطن من ${nationality}.
+                يوافق العامل على العمل لدى ${employerName} لمدة ${contractDuration} سنة براتب شهري قدره ${salary} دينار كويتي.
+                ${specialTerms ? `الشروط الخاصة: ${specialTerms}` : ''}
+            `;
+
+            document.getElementById('englishContract').textContent = english;
+            document.getElementById('arabicContract').textContent = arabic;
+        }
+    </script>
+</body>
+</html>
